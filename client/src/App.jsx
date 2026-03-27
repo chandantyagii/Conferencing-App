@@ -1,10 +1,13 @@
 
-
+import Register from "./component/Register"
+import Login from "./component/Login"
 function App() {
 
   return (
     <>
-    <h1>hlo ji </h1>
+    <Register/>
+    <br/>
+    <Login/>
       </>
   )
 }

@@ -1,7 +1,11 @@
-require("dotenv").config();
-const dbConnectFunction =require("./config/db");
+require('dotenv').config({ path: '../.env' });
+const PORT = process.env.PORT || 4000   ;// ager env me sa port na aya to 4000 chala jayega
+
 const express = require("express");
 const cors = require("cors");
+const dbConnectFunction =require("./config/db");
+
+const authRoute = require("./routes/authRoute");
 
 const app =  express();
 
@@ -12,13 +16,13 @@ app.use(express.json());/*allows frontend to talk to backend across ports/domain
 
 async function main(){
 
-    await dbConnectFunction();
+    await dbConnectFunction();// Connect first
+
+    app.use("/api/auth", authRoute); // Then setup routes
 
 
-
-const PORT = process.env.PORT || 4000   ;// ager env me sa port na aya to 4000 chala jayega
-
-app.listen(PORT ,  ()=>{
+ 
+    app.listen(PORT ,  ()=>{
 
     console.log(`port runing at ${PORT}`);
 }   );
