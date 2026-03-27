@@ -10,9 +10,9 @@ app.use(cors()); /*  is used to allow your frontend and backend to communicate w
 app.use(express.json());/*allows frontend to talk to backend across ports/domains */
 
 
-async function main(){
 
-    await dbConnectFunction();
+ dbConnectFunction();
+
 
 
 
@@ -22,9 +22,3 @@ app.listen(PORT ,  ()=>{
 
     console.log(`port runing at ${PORT}`);
 }   );
-
-}
-
-
-
-main();
