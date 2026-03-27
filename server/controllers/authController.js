@@ -23,6 +23,7 @@ exports.register = async(req,resp)=>{
 }
 
 exports.login = async(req,resp)=>{
+
     const {email ,password} =req.body;
 
     const user = await User.findOne({ email: email });
@@ -32,7 +33,9 @@ exports.login = async(req,resp)=>{
         const match = await bcrypt.compare( password , user.password  );
         if (!match) return resp.json({ message: "Wrong password" });
 
-
+        // If user credentials are correct
+        const token = jwt.sign(  { id:user.id }  , process.env.JWT_SECRET  ,  {expiresIn : "1d" }   );
+        resp.json({token});
 
     }else {
         return resp.json({ message: "User not registerd " });
