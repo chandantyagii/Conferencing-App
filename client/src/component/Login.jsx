@@ -16,7 +16,7 @@ function Login() {
             console.log(response.data);
             localStorage.setItem("token" , response.data.token  );
             localStorage.setItem("name" ,  response.data.name  );
-            navigate("/home");
+            navigate("/");
         }else {
             alert('api  is not responsing ');
         }
