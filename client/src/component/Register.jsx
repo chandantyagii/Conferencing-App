@@ -1,6 +1,9 @@
 import { useForm } from "react-hook-form";
 import instance from "../services/axiosInterceptor";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
+
 function Register() {
 
     const { register, handleSubmit } = useForm();
@@ -22,7 +25,7 @@ function Register() {
         if(response.status === 200 ){
             alert(response.data.message);
             navigate("/login");   // change path as needed
-        } 
+        }
 
 }
 
@@ -38,6 +41,7 @@ function Register() {
                     REGISTER
                 </h1>
 
+
                 <div>
                     <label className="block text-black mb-1">
                         Name
@@ -49,6 +53,7 @@ function Register() {
                         className="w-full px-3 py-2 rounded border border-gray-400 outline-none"
                     />
                 </div>
+
 
                 <div>
                     <label className="block text-black mb-1">
@@ -62,6 +67,8 @@ function Register() {
                     />
                 </div>
 
+
+
                 <div>
                     <label className="block text-black mb-1">
                         Password
@@ -74,12 +81,22 @@ function Register() {
                     />
                 </div>
 
+                <p className="text-sm">
+                    Already have an account?
+                    <Link to="/" className="text-blue-500 underline ml-1 hover:text-blue-700">
+                        Login
+                    </Link>
+                </p>
+
                 <button
                     type="submit"
                     className="mt-2 bg-sky-500 text-white py-2 rounded hover:bg-sky-600"
                 >
                     REGISTER
                 </button>
+
+
+
 
             </form>
 

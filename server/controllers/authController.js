@@ -31,11 +31,16 @@ exports.login = async(req,resp)=>{
     if(user) {
 
         const match = await bcrypt.compare( password , user.password  );
-        if (!match) return resp.json({ message: "Wrong password" });
+        if (!match) return  resp.json({ message: "Wrong password" });
 
         // If user credentials are correct
         const token = jwt.sign(  { id:user.id }  , process.env.JWT_SECRET  ,  {expiresIn : "1d" }   );
-        resp.json({token});
+
+        return     resp.json({
+            token:token ,
+            message:"login successfully",
+            name :`${user.name}`
+        });
 
     }else {
         return resp.json({ message: "User not registerd " });
