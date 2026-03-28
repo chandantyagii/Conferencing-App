@@ -8,8 +8,15 @@ exports.register = async(req,resp)=>{
 
 
     const exist = await User.findOne({ email: email });
+    // ager user hai to exist me docuemnt aayega mtlb true
 
-    if(exist) return resp.json( { message: "User Already Exist"  }  ) ;
+    if(exist){
+         return resp.json( {
+             message: "User Already Exist",
+             success :false
+            }  ) ;
+
+        }
 
     const hash = await bcrypt.hash(password ,10 ); /* yha 10 ka mtlab hai   */
 
@@ -17,9 +24,15 @@ exports.register = async(req,resp)=>{
         name:name ,
         email:email,
         password:hash
-    })
+    });
 
-    resp.json(user);
+   return  resp.json({
+    name :user.name,
+    email:user.email,
+    success:true,
+    password:user.password
+   });
+   
 }
 
 exports.login = async(req,resp)=>{
@@ -39,11 +52,14 @@ exports.login = async(req,resp)=>{
         return     resp.json({
             token:token ,
             message:"login successfully",
-            name :`${user.name}`
+            name :`${user.name}`,
+            success:true
         });
 
     }else {
-        return resp.json({ message: "User not registerd " });
+        return resp.json({ message: "User not registerd ",
+            success:false
+         });
     }
 
 }

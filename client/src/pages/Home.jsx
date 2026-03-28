@@ -1,15 +1,28 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const Home = () => {
 
+  const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
+
   const name = localStorage.getItem("name");
 
   function handleLogout() {
     localStorage.removeItem("token");
     localStorage.removeItem("name");
     navigate("/login");
+  }
+
+  function newMeetSubmit(data) {
+    if (!data.newMeet.trim()) return alert("Enter a meeting name");
+    navigate(`/meet/${data.newMeet.trim()}`)
+  }
+
+  function joinMeetSubmit(data) {
+   if (!data.joinMeet.trim()) return alert("Enter a meeting name");
+    navigate(`/meet/${data.joinMeet.trim()}`)
   }
 
   return (
@@ -19,17 +32,15 @@ const Home = () => {
       {/* Navbar */}
       <div className="flex justify-between items-center px-10 py-5">
 
-        {/* Logo */}
         <h1 className="text-3xl font-bold text-indigo-600">
           MeetEx
         </h1>
 
-        {/* Logout button */}
         <button
           onClick={handleLogout}
           className="bg-red-500 text-white px-5 py-2 rounded hover:bg-red-600"
         >
-          Logout ({name})
+          Logout
         </button>
 
       </div>
@@ -43,44 +54,60 @@ const Home = () => {
         </h2>
 
         <p className="text-2xl mb-6 text-gray-700">
-Connect Without Limits: Upgrade your meetings with simple, secure,
- next-generation video conferencing.
- </p>
+          Connect Without Limits: Upgrade your meetings with simple, secure,
+          next-generation video conferencing.
+        </p>
 
 
-        {/* New Meeting */}
-        <div className="flex gap-3 mb-4">
+        {/* New Meeting Form */}
+        <form onSubmit={handleSubmit(newMeetSubmit)}>
 
-          <input
-            type="text"
-            placeholder="Name your meet..."
-            className="border px-3 py-2 rounded"
-          />
+          <div className="flex gap-3 mb-4">
 
-          <button className="bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-600">
-            New Meet
-          </button>
+            <input
+              type="text"
+              placeholder="Name your meet..."
+              {...register("newMeet")}
+              className="border px-3 py-2 rounded"
+            />
 
-        </div>
+            <button
+              type="submit"
+              className="bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-600"
+            >
+              New Meet
+            </button>
+
+          </div>
+
+        </form>
 
 
         <p className="text-gray-500 mb-3">or</p>
 
 
-        {/* Join Meeting */}
-        <div className="flex gap-3">
+        {/* Join Meeting Form */}
+        <form onSubmit={handleSubmit(joinMeetSubmit)}>
 
-          <input
-            type="text"
-            placeholder="Enter code..."
-            className="border px-3 py-2 rounded"
-          />
+          <div className="flex gap-3">
 
-          <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-            Join Meet
-          </button>
+            <input
+              type="text"
+              placeholder="Enter code..."
+              {...register("joinMeet")}
+              className="border px-3 py-2 rounded"
+            />
 
-        </div>
+            <button
+              type="submit"
+              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            >
+              Join Meet
+            </button>
+
+          </div>
+
+        </form>
 
       </div>
 

@@ -9,19 +9,32 @@ function Login() {
 
  async   function submitForm(data) {
 
+    try{
+
+
         const response = await  instance.post(  "api/auth/login"  , data );
 
-
-        if(response.status  === 200 ){
+        if(response.data.success  ){ // user hua to success ture nhi to false
             console.log(response.data);
             localStorage.setItem("token" , response.data.token  );
             localStorage.setItem("name" ,  response.data.name  );
             navigate("/");
         }else {
-            alert('api  is not responsing ');
+            alert(response.data.message );
         }
 
+
+
+    }catch (err){
+
+        console.error(error);
+        alert("API not responding");
+
     }
+
+
+
+ }
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">

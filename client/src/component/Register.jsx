@@ -19,13 +19,21 @@ function Register() {
     //   config: { ... },
     //   request: { ... }
 
-
+    try
+    {
         const response = await instance.post("api/auth/register" , data );
 
-        if(response.status === 200 ){
-            alert(response.data.message);
+        if( response.data.success  ){
+
             navigate("/login");   // change path as needed
+        }else{
+            alert(response.data.message);
         }
+
+    }catch(err){
+        console.log("register api breaking"+err )
+        alert('register api breaking')
+    }
 
 }
 
