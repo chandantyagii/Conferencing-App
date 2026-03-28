@@ -17,11 +17,14 @@ app.use(express.json());/*allows frontend to talk to backend across ports/domain
 async function main(){
 
     await dbConnectFunction();// Connect first
+    app.get("/" , (req,resp)=>{
+        resp.send("server running at port " +PORT);
+    })
 
     app.use("/api/auth", authRoute); // Then setup routes
 
 
- 
+
     app.listen(PORT ,  ()=>{
 
     console.log(`port runing at ${PORT}`);
